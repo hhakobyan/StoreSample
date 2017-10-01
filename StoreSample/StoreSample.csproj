@@ -300,9 +300,7 @@
     <Content Include="Views\Home\ProductDetails.cshtml" />
     <Content Include="Views\Payment\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
   </ItemGroup>
