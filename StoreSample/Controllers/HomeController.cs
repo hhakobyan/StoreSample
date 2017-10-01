@@ -1,18 +1,29 @@
 ﻿namespace StoreSample.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
+    using StoreSample.ServiceInterfaces;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
 
     public class HomeController : Controller
     {
-        public ActionResult Index(int? id)
-        {
-            this.ViewBag.Categories = "";
+        private readonly ICategoryService categoryService;
+        private readonly IProductService productService;
 
-            return this.View(id);
+        public HomeController(ICategoryService categoryService, IProductService productService)
+        {
+            this.categoryService = categoryService;
+            this.productService = productService;
+        }
+
+        public async Task<ActionResult> Index(int? categoryId)
+        {
+            this.ViewBag.Categories = await this.categoryService.GetCategoriesAsync();
+            return this.View(await this.productService.GetProductsAsync(categoryId));
+        }
+
+        public async Task<ActionResult> ProductDetails(int id)
+        {
+            return this.View(await this.productService.GetProductAsync(id));
         }
     }
 }

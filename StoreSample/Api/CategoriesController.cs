@@ -1,38 +1,23 @@
 ﻿namespace StoreSample.Api
 {
     using System.Collections.Generic;
-    using System.Linq;
     using System.Web.Http;
 
-    using StoreSample.Entities;
+    using StoreSample.DomainEntities;
+    using StoreSample.DomainInterfaces;
 
     public class CategoriesController : ApiController
     {
-        private readonly StoreEntities db = new StoreEntities();
+        private readonly ICategoryRepository repo;
+
+        public CategoriesController(ICategoryRepository repo)
+        {
+            this.repo = repo;
+        }
 
         public IEnumerable<Category> Get()
         {
-            return this.db.Categories.Select(c => new { Id = c.Id, Name = c.Name }).ToList().Select(c => new Category { Id = c.Id, Name = c.Name });
-        }
-
-        public Category Get(int id)
-        {
-            return this.db.Categories.Find(id);
-        }
-
-        // POST api/<controller>
-        public void Post([FromBody]Category value)
-        {
-        }
-
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]Category value)
-        {
-        }
-
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
+            return this.repo.Get();
         }
     }
 }

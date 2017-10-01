@@ -1,0 +1,26 @@
+﻿@model StoreSample.DomainEntities.Product
+
+@{
+    ViewBag.Title = "Product Detail";
+}
+
+<div>
+    <h4>Product Detail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Name</dt>
+        <dd>@Html.DisplayFor(model => model.Name)</dd>
+
+        <dt>Image</dt>
+        <dd><img src="@Model.ImageUrl" style="width:200px;" /></dd>
+
+        <dt>Price</dt>
+        <dd>@Html.DisplayFor(model => model.Price)</dd>
+
+        <dt>Category</dt>
+        <dd>@Html.DisplayFor(model => model.CategoryName)</dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to Shopping Card", "Index", "ShoppingCard")
+</p>

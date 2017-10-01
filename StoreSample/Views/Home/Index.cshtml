@@ -1,38 +1,68 @@
-﻿@model int?
+﻿@model IEnumerable<StoreSample.DomainEntities.Product>
 @{
     ViewBag.Title = "Products";
 }
-
-@*<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    <div class="col-md-3 col-sm-4">
+        <div class="col-md-12">
+            @Html.ActionLink("All", "Index")
+        </div>
+        @foreach(StoreSample.DomainEntities.Category category in ViewBag.Categories)
+        {
+            <div class="col-md-12">
+                @Html.ActionLink(category.Name, "Index", new { categoryId = category.Id })
+            </div>
+        }
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    <div class="col-md-9 col-sm-8">
+        <div style="font-weight:bold;" class="row">
+            <div class="col-md-2">
+                Image
+            </div>
+            <div class="col-md-2">
+                Name
+            </div>
+            <div class="col-md-2">
+                Description
+            </div>
+            <div class="col-md-2">
+                Price
+            </div>
+            <div class="col-md-2">
+                Category
+            </div>
+            <div class="col-md-2">
+                Quantity
+            </div>
+        </div>
+            @foreach (var item in Model)
+            {
+                <div class="row">
+                    <div class="col-md-2">                        
+                        <img src="@item.ImageUrl" style="width:100px;" />
+                    </div>
+                    <div class="col-md-2">
+                        @item.Name
+                    </div>
+                    <div class="col-md-2">
+                        @item.Description
+                    </div>
+                    <div class="col-md-2">
+                        @item.Price
+                    </div>
+                    <div class="col-md-2">
+                        @item.CategoryName
+                    </div>
+                    <div class="col-md-2">
+                        @using (Html.BeginForm("AddToCard", "ShoppingCard"))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="productId" value="@item.Id" />
+                            <input type="number" class="form-control" name="quantity" value="0" />
+                            <input type="button" data-validate="true" value="Add to card" class="btn btn-primary" />
+                        }
+                    </div>
+                </div>
+            }
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>*@
-<div class="row">
-    <div class="col-md-1 col-sm-2">
-        
-    </div>
-    <div class="col-md-11 col-sm-10"></div>
 </div>

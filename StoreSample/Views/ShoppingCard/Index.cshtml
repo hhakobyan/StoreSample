@@ -1,0 +1,65 @@
+﻿@model IEnumerable<StoreSample.Models.OrderViewModel>
+@{
+    ViewBag.Title = "Shopping Cart";
+}
+
+<h2>Shopping Cart</h2>
+
+<div style="font-weight:bold;" class="row">
+    <div class="col-md-2">
+        Name
+    </div>
+    <div class="col-md-2">
+        Price
+    </div>
+    <div class="col-md-2">
+        Quantity
+    </div>
+    <div class="col-md-2">
+        Action
+    </div>
+</div>
+@foreach (var item in Model)
+{
+    <div class="row">
+        <div class="col-md-2">
+            @Html.ActionLink(item.Product.Name, "ProductDetails", "Home", new { id = item.Product.Id }, null)
+        </div>
+        <div class="col-md-2">
+            @item.Product.Price
+        </div>
+        <div class="col-md-2">
+            @item.Quantity
+        </div>
+        <div class="col-md-2">
+            @using (Html.BeginForm("RemoveFromCard", null))
+            {
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="productId" value="@item.Product.Id" />
+                <input type="button" data-validate="true" value="Remove" class="btn btn-primary" />
+            }
+        </div>
+    </div>
+}
+
+@if (Model.Any())
+{
+    <div class="row">
+        <div class="col-md-2 col-md-offset-6">
+            @Model.Sum(o => o.Product.Price * o.Quantity)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2 col-md-offset-6">
+            @Html.ActionLink("Checkout", "Index", "Payment")
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-2 col-md-offset-6">
+            @Html.ActionLink("Back to Products", "Index", "Home")
+        </div>
+    </div>
+}

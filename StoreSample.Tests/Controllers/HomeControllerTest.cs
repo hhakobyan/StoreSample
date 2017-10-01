@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.Mvc;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using StoreSample;
-using StoreSample.Controllers;
-
-namespace StoreSample.Tests.Controllers
+﻿namespace StoreSample.Tests.Controllers
 {
+    using System.Web.Mvc;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using StoreSample.Controllers;
+
     [TestClass]
     public class HomeControllerTest
     {
@@ -16,36 +11,23 @@ namespace StoreSample.Tests.Controllers
         public void Index()
         {
             // Arrange
-            HomeController controller = new HomeController();
+            HomeController controller = new HomeController(new TestCategoryService(), new TestProductService());
 
             // Act
-            ViewResult result = controller.Index() as ViewResult;
+            ViewResult result = controller.Index(null).Result as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);
         }
 
         [TestMethod]
-        public void About()
+        public void ProductDetails()
         {
             // Arrange
-            HomeController controller = new HomeController();
+            HomeController controller = new HomeController(new TestCategoryService(), new TestProductService());
 
             // Act
-            ViewResult result = controller.About() as ViewResult;
-
-            // Assert
-            Assert.AreEqual("Your application description page.", result.ViewBag.Message);
-        }
-
-        [TestMethod]
-        public void Contact()
-        {
-            // Arrange
-            HomeController controller = new HomeController();
-
-            // Act
-            ViewResult result = controller.Contact() as ViewResult;
+            ViewResult result = controller.ProductDetails(1).Result as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);
